@@ -2,7 +2,7 @@ import credits.aleo;
 import token_registry.aleo;
 
 // The 'compliant_token' program.
-program compliant_token.aleo {
+program compliant_token_psm12345.aleo {
   // Constants defining the token parameters.
   const COMPLAINT_TOKEN_ID: field = 71619063553950105623552field; // Unique token identifier
   const ADMIN_ADDRESS: address = aleo10047h9c9efxz3d0u69xn7alclvsvt96ysuhts80p7h2eh57kh5zsjwsp8f; // Admin address with minting and issuing privileges
@@ -104,6 +104,27 @@ program compliant_token.aleo {
       amount_spent: 0u128,
       epoch_spent: 0u32
     };
+  }
+
+   /**
+   * Issues a specific spend limit record for a specific user.
+   * Takes in the owner and the specific limit
+   * Can only be called by the ADMIN_ADDRESS.
+   */
+  transition issue_specific_limit(
+    owner: address,
+    new_limit: u128
+  ) -> SpendLimit {
+    assert_eq(self.caller, ADMIN_ADDRESS);
+
+    // Fetch the existing spend limit record
+    let spend_limit: SpendLimit = SpendLimit {
+      owner: owner,
+      amount_spent: new_limit,
+      epoch_spent: 0u32,
+    };
+
+    return spend_limit;
   }
 
   /**

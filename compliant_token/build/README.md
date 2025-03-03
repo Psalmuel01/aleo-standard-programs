@@ -1,4 +1,4 @@
-# compliant_token.aleo
+# compliant_token_psm12345.aleo
 
 ## Build Guide
 
